@@ -23,17 +23,14 @@
 </head>
 <body>
   <script>
-
     var http = new XMLHttpRequest();
     var url = "https://finance-genie.herokuapp.com/Transaction/get/";
     http.open('POST',url,false);
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     
     var body = "accessToken=access-development-1dae850d-afd1-4ee7-896f-53365c9ac4cc&startDate=2019-03-01&endDate=2019-03-31&accountID=NBeknL7jyzSeg8874dMOUmV5yd07RPTRXojwz";
-
     http.send(body);
     var input = http.responseText;
-
     require([
       "esri/Map",
       "esri/views/MapView",
@@ -42,7 +39,6 @@
       "esri/symbols/SimpleMarkerSymbol",
       "esri/layers/GraphicsLayer"
       ], function(Map, MapView, Graphic, Point, SimpleMarkerSymbol, GraphicsLayer) {
-
         map = new Map({
           basemap: "topo-vector"
         });
@@ -52,20 +48,13 @@
           center: [-118.27928, 34.13558],
           zoom: 12
         });
-
         var layer = new GraphicsLayer();
         var i =0;
-
         var parsed = JSON.parse("[" + input + "]");
-
         for(var current in parsed[0]){
-
-          //var inner = JSON.parse("[" + current + "]");
-          //console.log(parsed[0][current].location);
           
           var location = parsed[0][current].location;
-          //console.log(location)
-          
+
           var lat = location.lat;
           var lon = location.lon;
             
@@ -77,7 +66,6 @@
               longitude: lon,
               latitude: lat
             })
-
               // Create a symbol for drawing the point
               var markerSymbol = new SimpleMarkerSymbol({
                 color: [226, 119, 40],
@@ -92,8 +80,6 @@
                 symbol: markerSymbol
               })
               layer.add(pointGraphic);
-              // Add the graphic to the view
-
             }
           };
           map.add(layer);
@@ -105,4 +91,4 @@
       <div id="viewDiv"></div>
     </body>
 
-    </html>
+</html>
